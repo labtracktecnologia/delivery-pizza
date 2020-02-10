@@ -2,10 +2,10 @@
 
 # Ferramentas usadas
 
-###Vscode
-###Intellij IDE Communit
-###Git
+### Vscode
+### Intellij IDE Communit
+### Git
 
 # Framewok
-###Spring Boot
-###Java 8
+### Spring Boot
+### Java 8
