@@ -1,0 +1,22 @@
+--liquibase formatted sql
+--changeset andre.bongiolo:1
+INSERT INTO public.BORDAS( ID, DESCRICAO, PRECO)
+  VALUES ((SELECT NEXTVAL('SEQ_BORDAS')),'Catupiri',3);
+
+INSERT INTO public.BORDAS( ID, DESCRICAO, PRECO)
+  VALUES ((SELECT NEXTVAL('SEQ_BORDAS')),'Cheddar',3);
+
+INSERT INTO public.BORDAS( ID, DESCRICAO, PRECO)
+  VALUES ((SELECT NEXTVAL('SEQ_BORDAS')),'3queijos',3);
+
+INSERT INTO public.BORDAS( ID, DESCRICAO, PRECO)
+  VALUES ((SELECT NEXTVAL('SEQ_BORDAS')),'Chocolate preto',3);
+
+INSERT INTO public.BORDAS( ID, DESCRICAO, PRECO)
+  VALUES ((SELECT NEXTVAL('SEQ_BORDAS')),'Chocolate branco',3);
+
+INSERT INTO public.BORDAS( ID, DESCRICAO, PRECO)
+  VALUES ((SELECT NEXTVAL('SEQ_BORDAS')),'Nutella',3);
+
+--rollback not required
+
