@@ -21,7 +21,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 @CrossOrigin(origins = "Access-Control-Allow-Origin: *")
 @RequestMapping(value = "/pizza")
-public class PizzaResourse {
+public class PizzaResource {
 
 
 	@Autowired

@@ -19,7 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 @CrossOrigin(origins = "Access-Control-Allow-Origin: *")
 @RequestMapping(value = "/usuario")
-public class UsuarioResourse {
+public class UsuarioResource {
 
     @Autowired
     private BCryptPasswordEncoder pe;

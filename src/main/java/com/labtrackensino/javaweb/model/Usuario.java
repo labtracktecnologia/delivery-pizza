@@ -1,26 +1,32 @@
 package com.labtrackensino.javaweb.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity
 @Table(name = "USUARIOS", indexes = {
-		@Index(name = "idx_usuarios_email", columnList = "email", unique = true)
-})
-@SequenceGenerator(sequenceName = "SEQ_USUARIOS", name = "SEQ_USUARIOS", allocationSize = 1)
+		@Index(name = "idx_usuarios_email",
+				columnList = "email", unique = true)
+}
+)
+@SequenceGenerator(sequenceName = "SEQ_USUARIOS",
+		name = "SEQ_USUARIOS", allocationSize = 1)
 public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USUARIOS")
 	private Long id;
 
-	@Column(name = "NOME")
+	@Length(message = "O Tamanho não pode ser maior que {max}", max = 100)
+	@Column(name = "NOME" )
 	private String nome;
 
 	@Column(name = "SOBRENOME")
 	private String sobrenome;
 
-	//@JsonIgnore
 	@Column(name = "SENHA")
 	private String senha;
 
@@ -29,6 +35,24 @@ public class Usuario {
 
 	@Column(name = "EMAIL", unique = true)
 	private String email;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o){
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()){
+			return false;
+		}
+		Usuario usuario = (Usuario) o;
+		return Objects.equals(id, usuario.id) &&
+				Objects.equals(nome, usuario.nome);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, nome);
+	}
 
 	public Long getId() {
 		return id;

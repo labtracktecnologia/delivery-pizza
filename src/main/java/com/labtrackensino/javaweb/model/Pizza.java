@@ -6,10 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "PIZZAS", indexes = {
-		@Index(name = "idx_pizzas_descricao", columnList = "descricao")
-})
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "PIZZAS")
 @SequenceGenerator(sequenceName = "SEQ_PIZZAS", name = "SEQ_PIZZAS", allocationSize = 1)
 public class Pizza implements Serializable {
 
@@ -18,7 +15,7 @@ public class Pizza implements Serializable {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "CODIGO")
+	@Column(name = "CODIGO",  length = 50)
 	private String codigo;
 
 	@Column(name = "QUANTIDADE_FATIAS")
