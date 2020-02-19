@@ -1,8 +1,8 @@
-package com.labtrackensino.javaweb.config;
+package com.labtrackensino.javaweb.autentication;
 
-import com.labtrackensino.javaweb.security.JWTAuthenticationFilter;
-import com.labtrackensino.javaweb.security.JWTAuthorizationFilter;
-import com.labtrackensino.javaweb.security.JWTUtil;
+import com.labtrackensino.javaweb.autentication.filters.JWTAuthorizationFilter;
+import com.labtrackensino.javaweb.autentication.filters.JWTAuthenticationFilter;
+import com.labtrackensino.javaweb.autentication.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,9 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
-	private static final String[] PUBLIC_MATCHERS = {
-			"/h2-console/**"
-	};
 
 	private static final String[] PUBLIC_MATCHERS_GET_SET = {
 			"/bebida/**",
@@ -71,14 +68,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.headers().frameOptions().disable();
 		}
 		http.cors()
-
-				.and().csrf().disable();
-		http.authorizeRequests()
+				.and()
+				.csrf()
+				.disable()
+				.authorizeRequests()
 				.antMatchers(swaggerWhiteList).permitAll()
-				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET_SET).permitAll()
-				.antMatchers(PUBLIC_MATCHERS).permitAll();
-		//.anyRequest().authenticated();
+//				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+//				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET_SET).permitAll()
+				.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
