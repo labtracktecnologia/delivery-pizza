@@ -57,14 +57,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/auth/forgot/**"
 	};
 
+	private String[] swaggerWhiteList = {"/v2/api-docs",
+			"/swagger-resources/configuration/ui",
+			"/swagger-resources",
+			"/swagger-resources/configuration/security",
+			"/swagger-ui.html",
+			"/webjars/**"};
+
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
-		String encode = pe.encode("123456");
-		http.cors().and().csrf().disable();
+		http.cors()
+
+				.and().csrf().disable();
 		http.authorizeRequests()
+				.antMatchers(swaggerWhiteList).permitAll()
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET_SET).permitAll()
 				.antMatchers(PUBLIC_MATCHERS).permitAll();
