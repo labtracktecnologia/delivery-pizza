@@ -14,9 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
@@ -27,12 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private UserDetailsService userDetailsService;
 
-
 	private Environment env;
 
-
 	private JWTUtil jwtUtil;
-
 
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -42,15 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		this.jwtUtil = jwtUtil;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
-
-	private static final String[] PUBLIC_MATCHERS_GET_SET = {
-			"/usuario/**",
-			"/borda/**",
-			"/ingrediente/**",
-			"/pedido/**",
-			"/sabor/**",
-			"/pizza/**"
-	};
 
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/usuario/**",
@@ -77,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(swaggerWhiteList).permitAll()
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-//				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET_SET).permitAll()
 				.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
