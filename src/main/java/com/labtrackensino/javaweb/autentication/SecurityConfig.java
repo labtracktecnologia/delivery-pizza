@@ -5,6 +5,7 @@ import com.labtrackensino.javaweb.autentication.filters.JWTAuthorizationFilter;
 import com.labtrackensino.javaweb.autentication.security.JWTUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	private static final String[] PUBLIC_MATCHERS_GET_SET = {
-			"/bebida/**",
+			"/usuario/**",
 			"/borda/**",
 			"/ingrediente/**",
 			"/pedido/**",
@@ -75,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.disable()
 				.authorizeRequests()
 				.antMatchers(swaggerWhiteList).permitAll()
-//				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 //				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET_SET).permitAll()
 				.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
