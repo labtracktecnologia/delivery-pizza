@@ -8,15 +8,18 @@ import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 @Configuration
 public class ApiConfiguration {
+
 
 	@Bean
 	public CorsFilter corsFilter() {
@@ -25,20 +28,24 @@ public class ApiConfiguration {
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.addAllowedOrigin("*");
 		corsConfiguration.addAllowedHeader("*");
-		corsConfiguration.addAllowedMethod("GET");
-		corsConfiguration.addAllowedMethod("POST");
-		corsConfiguration.addAllowedMethod("PUT");
-		corsConfiguration.addAllowedMethod("OPTIONS");
-		corsConfiguration.addAllowedMethod("DELETE");
+		corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		source.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(source);
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 	@Bean
 	public LocaleResolver localeResolver() {
 		return new FixedLocaleResolver(new Locale("pt", "BR"));

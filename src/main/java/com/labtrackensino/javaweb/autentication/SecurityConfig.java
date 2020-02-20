@@ -5,6 +5,7 @@ import com.labtrackensino.javaweb.autentication.filters.JWTAuthorizationFilter;
 import com.labtrackensino.javaweb.autentication.security.JWTUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,8 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private JWTUtil jwtUtil;
 
 
-	private BCryptPasswordEncoder pe;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	public SecurityConfig(UserDetailsService userDetailsService, Environment env, JWTUtil jwtUtil, BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.userDetailsService = userDetailsService;
+		this.env = env;
+		this.jwtUtil = jwtUtil;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
 
 	private static final String[] PUBLIC_MATCHERS_GET_SET = {
 			"/bebida/**",
@@ -79,20 +86,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
 	}
 
 	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+
 }

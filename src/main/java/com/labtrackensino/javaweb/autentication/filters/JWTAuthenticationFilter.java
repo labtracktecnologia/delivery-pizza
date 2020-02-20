@@ -18,8 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.labtrackensino.javaweb.autentication.SecurityConstants.CONTENT_TYPE;
-import static com.labtrackensino.javaweb.autentication.SecurityConstants.HEADER_STRING;
+import static com.labtrackensino.javaweb.autentication.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -59,7 +58,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		String username = ((UserSS) auth.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
-		res.addHeader(HEADER_STRING, HEADER_STRING + token);
+		res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
 		res.addHeader("access-control-expose-headers", HEADER_STRING);
 	}
 
