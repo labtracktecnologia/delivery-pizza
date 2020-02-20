@@ -3,8 +3,6 @@ package com.labtrackensino.javaweb.autentication;
 import com.labtrackensino.javaweb.autentication.filters.JWTAuthenticationFilter;
 import com.labtrackensino.javaweb.autentication.filters.JWTAuthorizationFilter;
 import com.labtrackensino.javaweb.autentication.security.JWTUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,17 +22,16 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Qualifier("inMemoryUserDetailsManager")
-	@Autowired
+
 	private UserDetailsService userDetailsService;
 
-	@Autowired
+
 	private Environment env;
 
-	@Autowired
+
 	private JWTUtil jwtUtil;
 
-	@Autowired
+
 	private BCryptPasswordEncoder pe;
 
 

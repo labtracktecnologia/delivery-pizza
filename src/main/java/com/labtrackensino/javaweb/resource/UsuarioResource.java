@@ -21,12 +21,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping(value = "/usuario")
 public class UsuarioResource {
 
-	@Autowired
-	private BCryptPasswordEncoder pe;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@Autowired
 	private UsuarioRepository repository;
 
+	public UsuarioResource(BCryptPasswordEncoder bCryptPasswordEncoder, UsuarioRepository repository) {
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		this.repository = repository;
+	}
 
 	/**
 	 * @param limit  pagina atual;
@@ -63,7 +65,7 @@ public class UsuarioResource {
 	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity post(@RequestBody Usuario usuario) {
 
-		usuario.setSenha(pe.encode(usuario.getSenha()));
+		usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
 		Usuario persist = repository.save(usuario);
 
 		return new ResponseEntity<>(persist, HttpStatus.OK);
