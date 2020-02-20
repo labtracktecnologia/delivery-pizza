@@ -16,24 +16,5 @@ public class PizzaDeliveryApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PizzaDeliveryApplication.class, args);
 	}
-	@Bean
-	public CorsFilter corsFilter() {
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		final CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.addAllowedOrigin("*");
-		corsConfiguration.addAllowedHeader("*");
-		corsConfiguration.addAllowedMethod("GET");
-		corsConfiguration.addAllowedMethod("POST");
-		corsConfiguration.addAllowedMethod("PUT");
-		corsConfiguration.addAllowedMethod("OPTIONS");
-		corsConfiguration.addAllowedMethod("DELETE");
-		source.registerCorsConfiguration("/**", corsConfiguration);
-		return new CorsFilter(source);
-	}
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }
