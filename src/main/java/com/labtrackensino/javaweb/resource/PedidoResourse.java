@@ -16,6 +16,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping(value = "/pedido")
+@CrossOrigin(origins = "Access-Control-Allow-Origin: *")
+
 public class PedidoResourse {
 
 
@@ -28,7 +30,7 @@ public class PedidoResourse {
 	 * @param offset quantos por pagina;
 	 */
 	@RequestMapping(method = GET, produces = APPLICATION_JSON_VALUE,
-            path = "listar")
+			path = "listar")
 	public ResponseEntity listar(
 			@RequestParam(value = "limit") int limit,
 			@RequestParam(value = "offset") int offset
@@ -53,9 +55,6 @@ public class PedidoResourse {
 		pedido.getPizzas().forEach(
 				(p) -> p.setPedido(pedido)
 		);
-		for(PizzaPedido pizzaPedido: pedido.getPizzas()){
-		    pizzaPedido.setPedido(pedido);
-        }
 		Pedido persist = repository.save(pedido);
 
 		return new ResponseEntity<>(persist, HttpStatus.OK);
@@ -65,12 +64,12 @@ public class PedidoResourse {
 	public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Pedido pedido) {
 
 
-        pedido.getPizzas().forEach(
-                (p) -> p.setPedido(pedido)
-        );
-        Pedido pedidoUpdate = repository.save(pedido);
+		pedido.getPizzas().forEach(
+				(p) -> p.setPedido(pedido)
+		);
+		Pedido pedidoUpdate = repository.save(pedido);
 
-	    return new ResponseEntity<>(pedidoUpdate, HttpStatus.OK);
+		return new ResponseEntity<>(pedidoUpdate, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "{id}", method = DELETE)

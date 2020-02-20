@@ -1,7 +1,5 @@
 package com.labtrackensino.javaweb.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -22,7 +20,7 @@ public class Borda implements Serializable {
 	private BigDecimal preco;
 
 	@Column(name = "DESCRICAO", length = 50, nullable = false)
-	@NotNull(message = "Não pode existir bordas sem descrição")
+	@NotNull(message = "{borda.descricao.vazia}")
 	private String descricao;
 
 

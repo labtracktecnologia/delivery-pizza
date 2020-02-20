@@ -15,7 +15,7 @@ public class Pizza implements Serializable {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "CODIGO",  length = 50)
+	@Column(name = "CODIGO", length = 50)
 	private String codigo;
 
 	@Column(name = "QUANTIDADE_FATIAS")

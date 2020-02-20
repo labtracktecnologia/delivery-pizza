@@ -1,4 +1,4 @@
-package com.labtrackensino.javaweb.security;
+package com.labtrackensino.javaweb.autentication.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+
 @Component
 public class JWTUtil {
-	
+
 	@Value("${jwt.secret}")
 	private String secret;
 
 	@Value("${jwt.expiration}")
 	private Long expiration;
-	
+
 	public String generateToken(String username) {
 		return Jwts.builder()
 				.setSubject(username)
@@ -24,7 +25,7 @@ public class JWTUtil {
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
 				.compact();
 	}
-	
+
 	public boolean tokenValido(String token) {
 		Claims claims = getClaims(token);
 		if (claims != null) {
@@ -45,7 +46,8 @@ public class JWTUtil {
 		}
 		return null;
 	}
-	
+
+
 	private Claims getClaims(String token) {
 		try {
 			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();

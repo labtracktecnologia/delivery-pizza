@@ -21,71 +21,71 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping(value = "/usuario")
 public class UsuarioResource {
 
-    @Autowired
-    private BCryptPasswordEncoder pe;
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
-    @Autowired
-    private UsuarioRepository repository;
-
-
-    /**
-     * @param limit  pagina atual;
-     * @param offset quantos por pagina;
-     */
-    @RequestMapping(method = GET, produces = APPLICATION_JSON_VALUE, path = "listar")
-    public ResponseEntity listar(
-            @RequestParam(value = "limit") int limit,
-            @RequestParam(value = "offset") int offset
-    ) {
-        Pageable pageable = PageRequest.of(limit, offset, Sort.by(Sort.Direction.DESC, "id"));
-        Iterable<Usuario> usuarios = repository.findAll(pageable);
-
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
-    }
+	@Autowired
+	private UsuarioRepository repository;
 
 
-    @RequestMapping(value = "{id}", method = GET, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity get(@PathVariable Long id) {
+	/**
+	 * @param limit  pagina atual;
+	 * @param offset quantos por pagina;
+	 */
+	@RequestMapping(method = GET, produces = APPLICATION_JSON_VALUE, path = "listar")
+	public ResponseEntity listar(
+			@RequestParam(value = "limit") int limit,
+			@RequestParam(value = "offset") int offset
+	) {
+		Pageable pageable = PageRequest.of(limit, offset, Sort.by(Sort.Direction.DESC, "id"));
+		Iterable<Usuario> usuarios = repository.findAll(pageable);
 
-        Usuario usuario = repository.findById(id).orElse(null);
+		return new ResponseEntity<>(usuarios, HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(usuario, HttpStatus.OK);
-    }
 
-    @RequestMapping(value = "email", method = GET, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity getByEmail(@RequestParam String email) {
+	@RequestMapping(value = "{id}", method = GET, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity get(@PathVariable Long id) {
 
-        Usuario usuario = repository.findByEmail(email);
+		Usuario usuario = repository.findById(id).orElse(null);
 
-        return new ResponseEntity<>(usuario, HttpStatus.OK);
-    }
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
+	}
 
-    @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity post(@RequestBody Usuario usuario) {
+	@RequestMapping(value = "email", method = GET, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity getByEmail(@RequestParam String email) {
 
-        usuario.setSenha(pe.encode(usuario.getSenha()));
-        Usuario persist = repository.save(usuario);
+		Usuario usuario = repository.findByEmail(email);
 
-        return new ResponseEntity<>(persist, HttpStatus.OK);
-    }
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "{id}", method = PUT, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
+	public ResponseEntity post(@RequestBody Usuario usuario) {
 
-        Optional<Usuario> find = repository.findById(id);
-        if (find.isPresent()) {
-            Usuario update = find.get();
-            update.setEmail(usuario.getEmail());
-            update.setSenha(usuario.getSenha());
-            return new ResponseEntity<>(repository.save(update), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(repository.save(usuario), HttpStatus.OK);
-    }
+		usuario.setSenha(pe.encode(usuario.getSenha()));
+		Usuario persist = repository.save(usuario);
 
-    @RequestMapping(value = "{id}", method = DELETE)
-    public ResponseEntity delete(@PathVariable("id") Long id) {
-        repository.deleteById(id);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
+		return new ResponseEntity<>(persist, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "{id}", method = PUT, consumes = APPLICATION_JSON_VALUE)
+	public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+
+		Optional<Usuario> find = repository.findById(id);
+		if (find.isPresent()) {
+			Usuario update = find.get();
+			update.setEmail(usuario.getEmail());
+			update.setSenha(usuario.getSenha());
+			return new ResponseEntity<>(repository.save(update), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(repository.save(usuario), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "{id}", method = DELETE)
+	public ResponseEntity delete(@PathVariable("id") Long id) {
+		repository.deleteById(id);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
 
 }

@@ -1,4 +1,4 @@
-package com.labtrackensino.javaweb.security;
+package com.labtrackensino.javaweb.autentication.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -3,7 +3,6 @@ package com.labtrackensino.javaweb.resource;
 
 import com.labtrackensino.javaweb.model.Pizza;
 import com.labtrackensino.javaweb.repository.PizzaRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

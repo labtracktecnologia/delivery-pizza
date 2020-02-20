@@ -15,14 +15,18 @@ import java.util.stream.Collectors;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object>
+	handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+								 HttpHeaders headers, HttpStatus status, WebRequest request) {
 		List<ObjectError> errors = getErrors(ex);
 		ErrorResponse errorResponse = getErrorResponse(ex, status, errors);
 		return new ResponseEntity<>(errorResponse, status);
 	}
 
-	private ErrorResponse getErrorResponse(MethodArgumentNotValidException ex, HttpStatus status, List<ObjectError> errors) {
-		return new ErrorResponse("Requisição possui campos inválidos", status.value(),
+	private ErrorResponse getErrorResponse(MethodArgumentNotValidException ex,
+										   HttpStatus status, List<ObjectError> errors) {
+		return new ErrorResponse("Requisição possui campos inválidos",
+				status.value(),
 				status.getReasonPhrase(), ex.getBindingResult().getObjectName(), errors);
 	}
 

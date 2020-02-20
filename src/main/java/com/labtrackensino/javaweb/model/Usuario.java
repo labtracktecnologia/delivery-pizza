@@ -21,7 +21,7 @@ public class Usuario {
 	private Long id;
 
 	@Length(message = "O Tamanho não pode ser maior que {max}", max = 100)
-	@Column(name = "NOME" )
+	@Column(name = "NOME")
 	private String nome;
 
 	@Column(name = "SOBRENOME")
@@ -38,10 +38,10 @@ public class Usuario {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o){
+		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()){
+		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
 		Usuario usuario = (Usuario) o;

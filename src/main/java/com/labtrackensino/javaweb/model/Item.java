@@ -14,4 +14,20 @@ public abstract class Item implements Serializable {
 
 	@Column(name = "DESCRICAO")
 	private String descricao;
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 }

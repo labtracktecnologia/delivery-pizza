@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BordaRepository extends 
+public interface BordaRepository extends
 		JpaRepository<Borda, Long> {
 
 	String SQL_PESQUISA = "select b from Borda b where " +

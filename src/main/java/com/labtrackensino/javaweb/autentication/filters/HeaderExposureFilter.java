@@ -1,4 +1,4 @@
-package com.labtrackensino.javaweb.filters;
+package com.labtrackensino.javaweb.autentication.filters;
 
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class HeaderExposureFilter implements Filter {
 
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(FilterConfig filterConfig) {
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package com.labtrackensino.javaweb.services;
 
+import com.labtrackensino.javaweb.autentication.security.Perfil;
+import com.labtrackensino.javaweb.autentication.security.UserSS;
 import com.labtrackensino.javaweb.model.Usuario;
 import com.labtrackensino.javaweb.repository.UsuarioRepository;
-import com.labtrackensino.javaweb.security.Perfil;
-import com.labtrackensino.javaweb.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
