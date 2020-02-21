@@ -2,6 +2,7 @@ package com.labtrackensino.javaweb.resource;
 
 import com.labtrackensino.javaweb.model.Usuario;
 import com.labtrackensino.javaweb.repository.UsuarioRepository;
+import com.labtrackensino.javaweb.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,9 +26,12 @@ public class UsuarioResource {
 
 	private UsuarioRepository repository;
 
-	public UsuarioResource(BCryptPasswordEncoder bCryptPasswordEncoder, UsuarioRepository repository) {
+	private UsuarioService usuarioService;
+
+	public UsuarioResource(BCryptPasswordEncoder bCryptPasswordEncoder, UsuarioRepository repository, UsuarioService usuarioService) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 		this.repository = repository;
+		this.usuarioService = usuarioService;
 	}
 
 	/**
@@ -64,11 +68,10 @@ public class UsuarioResource {
 
 	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity post(@RequestBody Usuario usuario) {
-
 		usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
-		Usuario persist = repository.save(usuario);
+		Usuario usuarioSaved = usuarioService.save(usuario);
 
-		return new ResponseEntity<>(persist, HttpStatus.OK);
+		return new ResponseEntity<>(usuarioSaved, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "{id}", method = PUT, consumes = APPLICATION_JSON_VALUE)
